@@ -1,13 +1,3 @@
-variable "environment" {
-  default = "dev"
-  type = string
-}
-
-variable "project" {
-  default = "roboshop"
-  type =string
-}
-
 variable "ami_id" {
   type        = string
   default     = "ami-0220d79f3f480ecf5"
@@ -16,13 +6,27 @@ variable "ami_id" {
 
 variable "instance_type" {
   type    = string
-  default = "t3.micro"
+  #default = "t3.micro"
 
   validation {
     condition     = contains(["t3.micro", "t3.small","t3.medium","t3.large"], var.instance_type)
     error_message = "Imstance type should be either t3.micro or t3.small"
   }
 }
+
+variable "common_tags" {
+  default = {
+    project = "roboshop"
+    Environment = "dev"
+  } 
+}
+
+/* variable "ec2_tags" {
+  type = map
+  default = {
+    Name        = "terraform-demo-1"
+  }
+} */
 
 variable "sg_name" {
   type    = string
@@ -38,19 +42,11 @@ variable "cidr" {
   type    = list(string)
   default = ["0.0.0.0/0"]
 }
-
-variable "instances" {
-  default = ["mongodb", "redis", "mysql", "rabbitmq", "catalogue", "user", "cart", "shipping", "payment", "frontend"] 
-  type = list
-  
-}
-
-variable "zone_id" {
-  default = "Z04059211037V5XD2IM6D"
-}
-
-variable "domain_name" {
-  default = "daws90s.fun" 
-}
+# variable "sg_tags" {
+#   type = map(string)
+#   default = {
+#     Name        = "allow_terraform"
+#   }
+# }
 
     
